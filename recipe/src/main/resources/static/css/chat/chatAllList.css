@@ -1,0 +1,145 @@
+@charset "UTF-8";
+:root{
+	--main-color : #ffa477;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body{
+	margin : 0;
+	padding : 0;
+}
+
+#wrap{
+	width : 100%;
+	height : 100vh;
+	padding-top : 10px;
+}
+#top{
+	width : 100%;
+	height : 100px;
+}
+#chatBox{
+	padding-left : 400px;
+	display : flex;
+	flex-direction : row;
+}
+#roomList{
+	width : 250px;
+	overflow : auto;
+	height : 300px;
+	border : 1px solid var(--main-color);
+	border-radius : 3px;
+	background : white;
+}
+#roomList::-webkit-scrollbar {
+	width: 10px;
+}
+#roomList::-webkit-scrollbar-thumb {
+	background-color: #ffa67b;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+#roomList::-webkit-scrollbar-track {
+	background-color: #ffdbca;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+.roomName{
+	width : 100%;
+	height : 50px;
+	border : 1px solid;
+	margin-bottom : 3px;
+	border-radius : 3px;
+	display : flex;
+	justify-content : center;
+	align-items :center;
+	overflow : auto;
+	color : var(--main-color);
+	border : 1px solid var(--main-color);
+	font-size : 20px;
+	font-weight : 600;
+	cursor : pointer;
+}
+input[name="roomSelect"]:checked + label{
+	background : var(--main-color);
+	color : white;
+}
+.hidden{
+	display : none;
+}
+#chatOneBox{
+	width : 600px;
+	background : white;
+	min-height : 600px;
+	margin-left : 10px;
+	border-radius : 5px;
+	position : relative;
+	border : 1px solid;
+	height : auto;
+}
+#textBox{
+	width : 100%;
+	height : 550px;
+	overflow : auto;
+}
+#inputBox{
+	border-top : 3px solid var(--main-color);
+	position : absolute;
+	top : 550px;
+	width : 100%;
+	min-height : 50px;
+	display : flex;
+	justify-content : space-between;
+	padding : 3px 5px;
+	background : white;
+}
+#inputBox textarea{
+	width : 510px;
+	resize: none;
+	font-family:Verdana;
+	font-size : 20px;
+	height : 45px;
+	padding : 3px 5px;
+}
+#textarea::-webkit-scrollbar{
+	display : none;
+}
+#inputBox button{
+	width : 70px;
+	height : 45px;
+}
+#textBox>div{
+	width : 100%;
+	padding : 5px 15px;
+}
+#textBox>div>div{
+	padding : 5px 10px;
+	max-width : 350px;
+	word-break : break-all;
+	border-radius : 5px;
+}
+.opponent{
+	display : flex;
+	flex-direction: row;
+}
+.opponent>div{
+	background : #91bcfd;
+}
+.myself{
+	display : flex;
+	flex-direction: row-reverse;
+}
+.myself>div{
+	background : #ffceb7;
+}
+.admin{
+	display : flex;
+	justify-content : center;
+}
+.admin>div{
+	background : gray;
+}

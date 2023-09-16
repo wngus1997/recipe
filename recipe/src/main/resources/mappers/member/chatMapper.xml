@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.food.recipe.chtting.ChatDAO">
+	<!-- 채팅방 관련 -->
+	<insert id="roomCreate">
+		insert into room(roomName, host, guest)
+		values (#{roomName}, #{host}, #{guest})
+	</insert>
+	<select id="roomOne" parameterType="int" resultType="com.food.recipe.chtting.RoomVO">
+		select * from room where roomNo=#{roomNo}
+	</select>
+	<select id="roomAllList" parameterType="string" resultType="com.food.recipe.chtting.RoomVO">
+		select * from room where host=#{memId} OR guest=#{memId}
+	</select>
+	<select id="roomCheck" parameterType="string" resultType="int">
+		select count(*) from room where roomName=#{roomName}
+	</select>
+	<select id="roomAuthority" parameterType="hashmap" resultType="int"><!-- 권한 확인 -->
+		select count(*) from room where (host=#{memId} OR guest=#{memId}) and roomNo=#{roomNo}
+	</select>
+	<delete id="roomDelete" parameterType="int">
+		DELETE FROM room WHERE host="0" and guest="0" and roomNo=#{roomNo}
+	</delete>
+	<update id="roomUpdate" parameterType="hashmap">
+  		UPDATE room
+  		SET
+  		<choose>
+  			<when test="who.equals('host')">
+  				host="0"
+  			</when>
+  			<when test="who.equals('guest')">
+  				guest="0"
+  			</when>
+  		</choose>
+  	    WHERE roomNo=#{roomNo}
+	</update>
+	
+	<!-- 채팅메세지 관련 -->
+	<select id="chatAll" parameterType="int" resultType="com.food.recipe.chtting.ChatVO">
+		select * from chat where roomNo=#{roomNo}
+	</select>
+	<insert id="chatInsert"><!-- sender가 Admin이면 중립 메시지 -->
+		insert into chat(roomNo, message, sender)
+		values (#{roomNo}, #{message}, #{sender})
+	</insert>
+	<select id="nickToId" parameterType="string" resultType="string">
+		select memId from member where memNick=#{memNick}
+	</select>
+	<select id="idToNick" parameterType="string" resultType="string">
+		select memNick from member where memId=#{memId}
+	</select>
+</mapper>

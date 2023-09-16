@@ -1,0 +1,54 @@
+@charset "UTF-8";
+:root{
+	--main-color : #ffa477;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body{
+	margin : 0;
+	padding : 0;
+}
+
+#top_wrap{
+	width : 100%;
+}
+#side_sideBox{
+	position : absolute;
+	left : 0px;
+	top : 300px;
+	display : flex;
+	flex-direction: column;
+	justify-content : center;
+	width : 250px;
+/* 	border : 1px solid var(--main-color); */
+	font-size : 25px;
+	margin-left : 100px;
+}
+#side_sideBox>a{
+	display : flex;
+	padding-left : 30px;
+	align-items : center;
+	height : 50px;
+/* 	background : white; */
+	color : var(--main-color);
+	text-decoration : none;
+	border-radius : 30px;
+	margin-bottom : 5px;
+/* 	border-top : 1px solid var(--main-color); */
+}
+#side_sideBox a:hover{
+	background : var(--main-color);
+/* 	border-top : 1px solid white; */
+	color : white;
+}
+#side_sideBox>div{
+	height : 50px;
+	font-weight : 700;
+	display : flex;
+/* 	justify-content : center; */
+	align-items : center;
+	color : var(--main-color);
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.food.recipe.dao.IMemberDAO">
+	
+	<!-- 로그인 확인 -->
+	<select id="loginCheck" parameterType = "string" resultType="string">
+		select memPw from member where memId=#{memId}
+	</select>
+	
+	<!-- 회원 등록 -->
+	<insert id="insertMember">
+		insert into member(memId, memPw, memName, memNick, memEmail, memDate, blame, available)
+		values (#{memId}, #{memPw}, #{memName}, #{memNick}, #{memEmail}, #{memDate}, 0, 0)
+	</insert>
+	
+	<!-- 아이디 중복 확인 -->
+	<select id="memIdCheck" parameterType = "string" resultType="int">
+		select count(*) from member where memId=#{memId}
+	</select>
+	<!-- 닉네임 중복 확인 -->
+	<select id="memNickCheck" parameterType = "string" resultType="int">
+		select count(*) from member where memNick=#{memNick}
+	</select>
+	
+	<!-- 이메일 중복 확인 -->
+	<select id="emailChk" parameterType = "string" resultType="int">
+		select count(*) from member where memEmail=#{email}
+	</select>
+	<!-- 메일키 등록 -->
+	<insert id="mailAuthInsert" parameterType = "com.food.recipe.mail.MailVO">
+		insert into emailAuth(mailKey, mailTime, email, memId)
+		values (#{mailKey}, #{mailTime}, #{email}, #{memId})
+	</insert>
+	<select id="mailAuthChk" parameterType = "com.food.recipe.mail.MailVO" resultType="int">
+		select count(*) from emailAuth where email=#{email} and memId=#{memId} and mailAuth=#{mailAuth}
+	</select>
+	<update id="mailAuthUpdate"  parameterType="com.food.recipe.mail.MailVO">
+  		UPDATE emailAuth
+  		SET mailAuth=#{mailAuth}
+  	    WHERE memId=#{memId} and email=#{email}
+	</update>
+	
+	
+	<!-- 즐겨찾기 확인 -->
+	<select id="favorCheck" parameterType = "hashmap" resultType="int">
+		select count(*) from favor where memId=#{memId} and rcpNo=#{rcpNo}
+	</select>
+	<!-- 즐겨찾기 추가 -->
+	<insert id="favorInsert" parameterType = "hashmap">
+		insert into favor(memId, rcpNo)
+		values (#{memId}, #{rcpNo})
+	</insert>
+	<update id="rcpFavorInsert"  parameterType="int">
+  		UPDATE recipe
+  		SET grade=grade+1
+  	    WHERE rcpNo=#{rcpNo}
+	</update>
+	<!-- 즐겨찾기 삭제 -->
+	<delete id="favorDelete" parameterType="hashmap">
+		DELETE FROM favor WHERE memId=#{memId} and rcpNo=#{rcpNo}
+	</delete>
+	<update id="rcpFavorDelete"  parameterType="int">
+  		UPDATE recipe
+  		SET grade=grade-1
+  	    WHERE rcpNo=#{rcpNo}
+	</update>
+	<select id="findID" parameterType = "string" resultType="string">
+		select memId from member where memEmail=#{email}
+	</select>
+	<select id="findPW" parameterType = "hashmap" resultType="int">
+		select count(*) from member where memEmail=#{memEmail} and memId=#{memId}
+	</select>
+	<update id="findPWChange"  parameterType="hashmap">
+  		UPDATE member
+  		SET memPw=#{memPw}
+  	    WHERE memId=#{memId}
+	</update>
+</mapper>

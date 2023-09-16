@@ -1,0 +1,144 @@
+@charset "UTF-8";
+:root{
+	--main-color : #ffa477;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body{
+	margin : 0;
+	padding : 0;
+}
+.hidden{
+	display : none;
+}
+#wrap{
+	width : 100%;
+}
+#infoBox{
+	margin-left : 400px;
+	margin-top : 50px;
+}
+#title{
+	font-size : 40px;
+	color : var(--main-color);
+	font-weight : 600;
+}
+#contentBox{
+	padding : 50px 0 0 50px;
+	font-size : 20px;
+}
+#passwordBox{
+	width : 1000px;
+	border : 5px solid var(--main-color);
+	border-radius : 10px;
+	padding : 50px 0 10px 50px;
+	position : relative;
+	margin-top : 50px;
+}
+#passwordBox input{
+	border-radius : 10px;
+/* 	border : 1px solid var(--main-color); */
+	height : 45px;
+	width : 250px;
+	padding : 5px 10px;
+}
+.pwBox{
+	display : flex;
+	align-items : center;
+	margin-bottom : 3px;
+}
+.pwBox>div:first-child{
+	width : 180px;
+}
+#pwBtnBox button{
+	border-radius : 5px;
+	height : 40px;
+	width : 100px;
+/* 	border : 1px solid var(--main-color); */
+/* 	background : white; */
+/* 	color : var(--main-color); */
+}
+#pwBtnBox{
+	text-align : right;
+	padding-right : 20px;
+}
+
+
+
+#profileBox{
+	width : 1000px;
+	border : 5px solid var(--main-color);
+	border-radius : 10px;
+	padding : 50px 0 10px 50px;
+	position : relative;
+}
+.subtitle{
+	position : absolute;
+	top : -20px;
+	left : 10px;
+	background : white;
+	color : var(--main-color);
+	padding : 0 10px;
+	font-size : 25px;
+}
+#profileBtnBox{
+	text-align : right;
+	padding-right : 20px;
+}
+#profileBtnBox button{
+	border-radius : 5px;
+	height : 40px;
+	width : 100px;
+}
+#nickNameBox{
+	display : flex;
+	align-items : center;
+	margin-bottom : 3px;
+}
+#nickNameBox>div:first-child{
+	width : 180px;
+}
+#nickNameBox>input{
+	border-radius : 10px;
+	height : 45px;
+	width : 250px;
+	padding : 5px 10px;
+}
+#nickCheck{
+	margin-left : 5px;
+	border-radius : 10px;
+	height : 45px;
+}
+#profileImgBox{
+	display : inline;
+}
+#profileImg{
+	margin-left : 100px;
+	margin-bottom : 50px;
+	width : 200px;
+	height : 200px;
+	border-radius : 100%;
+	border : 1px solid gray;
+	justify-content : center;
+	display : flex;
+	align-items : center;
+}
+#profileImg>i{
+	font-size : 100px;
+	color : gray;
+}
+#profileLabel{
+	background : #F0F0F0;
+	border : 1px solid;
+	border-radius : 10px;
+	padding : 3px 5px;
+	height : 50px;
+	display : flex;
+	align-items : center;
+	justify-content : center;
+	width : 150px;
+	position : relative;
+}

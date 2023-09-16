@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+:root{
+	--main-color : #ffa477;
+}
+
+body{
+	margin : 0;
+	padding : 0;
+}
+
+#contentBox{
+	width : 700px;
+	margin : 10px auto auto auto;
+	border-top-left-radius : 10px;
+	border-top-right-radius : 10px;
+	border : solid 1px var(--main-color);
+	box-sizing : border-box;
+	padding-bottom : 20px;
+}
+/* ****************** 로고박스 ****************** */
+#logo{
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	height : 70px;
+	border-bottom : solid 1px var(--main-color);
+	
+}
+
+#logo a{
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	font-size : 30px;
+	text-decoration: none;
+	width : 100%;
+	height : 100%;
+	color : var(--main-color);
+}
+
+/* ****************** 회원정보 ****************** */
+
+table{
+	width : 100%;
+}
+tr{
+	text-align : center;
+}
+
+tr>td:first-child{
+	width : 35%;
+	text-align : right;
+	padding-right : 50px;
+	font-size : 20px;
+	color : #ff6215;
+}
+
+
+.inputInf{
+	text-align : left;
+}
+.infMes{
+	text-align : left;
+	height : 20px;
+	color : red;
+}
+
+input{
+	height : 30px;
+	font-size : 20px;
+	width : 140px;
+	box-sizing : border-box;
+	border : 1px var(--main-color) solid;
+	border-radius : 5px;
+}
+input:focus{
+	outline : var(--main-color) 1px solid;
+}
+button{
+	height : 30px;
+	box-sizing : border-box;
+	background : white;
+	color : var(--main-color);
+	border : 1px var(--main-color) solid;
+	border-radius : 5px;
+}
+
+button:hover{
+	background : var(--main-color);
+	color : white;
+	cursor : pointer;
+}
+
+#memPwChk{
+	margin-top : 3px;
+}
+
+#joinBox{
+/* 	border-top : 1px solid var(--main-color); */
+	display : flex;
+	justify-content : center;
+	align-items : center;
+}
+
+#joinBtn{
+	width : 700px;
+	height : 60px;
+	color : white;
+	background : var(--main-color);
+	border-top-left-radius : 0px;
+	border-top-right-radius : 0px;
+	border-bottom-left-radius : 10px;
+	border-bottom-right-radius : 10px;
+	box-sizing : border-box;
+}
+
+#joinBtn:hover{
+	filter: brightness(0.9);
+	cursor : pointer;
+}
+
+}

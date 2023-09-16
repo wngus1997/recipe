@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.food.recipe.dao.IRecipeDAO">
+	
+	<!-- 레시피 등록 -->
+	<insert id="recipeInsert" parameterType = "com.food.recipe.model.RecipeVO" useGeneratedKeys = "true" keyColumn = "rcpNo" keyProperty = "rcpNo">
+		insert into recipe(memId, rcpTitle, rcpDcb, caut, foodName, rcpDate, ctg1, 
+							ctg2, ctg3, idnt, repImg, comImg, state, view, grade)
+		values (#{memId}, #{rcpTitle}, #{rcpDcb}, #{caut}, #{foodName}, #{rcpDate}, #{ctg1},
+				 #{ctg2}, #{ctg3}, #{idnt}, #{repImg}, #{comImg}, #{state}, 0, 0)
+	</insert>
+	
+	<!-- 순서 등록 -->
+	<insert id="OrderInsert" parameterType = "com.food.recipe.model.IdntOrderVO">
+		insert into idntOrder(rcpNo, step, ordDcb, ordImg)
+		values (#{rcpNo}, #{step}, #{ordDcb}, #{ordImg})
+	</insert>
+	
+	<!-- 레시피들 가져오기 -->
+	<select id="listAllRecipe" parameterType = "com.food.recipe.model.RecipeFilterVO" resultType = "com.food.recipe.model.RecipeVO">
+		SELECT * FROM recipe r, member m WHERE r.memId = m.memId and r.state = 1 ORDER BY r.rcpDate limit #{startN}, #{noticeCnt}
+	</select>
+	
+	<!-- 레시피 수 가져오기 -->
+	<select id="noticeCnt" resultType="int">
+  		select count(*) from recipe
+  	</select>
+  	<select id="noticeSearchCnt" resultType="int">
+  		select count(*) from recipe
+  		<where>
+	  		<choose>
+	  			<when test="searchInp != '' and searchInp != null and search.equals('foodName')">
+	  				foodName Like CONCAT('%', #{searchInp}, '%')
+	  			</when>
+	  			<when test="searchInp != '' and searchInp != null and search.equals('rcpTitle')">
+	  				rcpTitle Like CONCAT('%', #{searchInp}, '%')
+	  			</when>
+	  			<otherwise> 1 = 1</otherwise>
+	  		</choose>
+	  		and(
+	  		<choose>
+	  			<when test="ctg1 != null">
+	  				<foreach collection="ctg1" item="item" index="index" separator="or">
+						ctg1 = #{item}
+					</foreach>
+	  			</when>
+	  			<otherwise> 1 = 1</otherwise>
+	  		</choose>
+		  	)
+	  		and(
+	  		<choose>
+	  			<when test="ctg2 != null">
+	  				<foreach collection="ctg2" item="item" index="index" separator="or">
+						ctg2 = #{item}
+					</foreach>
+	  			</when>
+	  			<otherwise> 1 = 1</otherwise>
+	  		</choose>
+		  	)
+	  		and(
+		  	<choose>
+	  			<when test="ctg3 != null">
+	  				<foreach collection="ctg3" item="item" index="index" separator="or">
+						ctg3 = #{item}
+					</foreach>
+	  			</when>
+	  			<otherwise> 1 = 1</otherwise>
+		  	</choose>
+		  	)
+			and state = 1
+			<choose>
+	  			<when test="orderBy.equals('rcpDate')">
+	  				ORDER BY rcpDate ASC
+	  			</when>
+	  			<when test="orderBy.equals('rcpTitle')">
+	  				ORDER BY rcpTitle ASC
+	  			</when>
+	  			<when test="orderBy.equals('foodName')">
+	  				ORDER BY foodName ASC
+	  			</when>
+	  		</choose>
+		</where>
+  	</select>
+  	<!-- 카테고리 가져오기 -->
+	<select id="listCtg" resultType="com.food.recipe.model.CtgInfVO">
+  		select * from ctgTable
+  	</select>
+  	
+  	<select id="listSearchRecipe" parameterType = "com.food.recipe.model.RecipeFilterVO" resultType = "com.food.recipe.model.RecipeVO">
+  		SELECT * FROM recipe r, member m
+  		<where>
+  			r.memId = m.memId and
+  			<trim prefixOverrides="and">
+		  		<choose>
+		  			<when test="searchInp != '' and searchInp != null and search.equals('foodName')">
+		  				r.foodName Like CONCAT('%', #{searchInp}, '%')
+		  			</when>
+		  			<when test="searchInp != '' and searchInp != null and search.equals('rcpTitle')">
+		  				r.rcpTitle Like CONCAT('%', #{searchInp}, '%')
+		  			</when>
+		  			<otherwise> 1 = 1</otherwise>
+		  		</choose>
+		  		<trim suffixOverrides="and(" prefixOverrides=")">and(
+			  		<choose>
+			  			<when test="ctg1 != null">
+			  				<foreach collection="ctg1" item="item" index="index" separator="or">
+								r.ctg1 = #{item}
+							</foreach>
+			  			</when>
+			  			<otherwise> 1 = 1</otherwise>
+			  		</choose>
+			  		)
+		  		</trim>
+		  		<trim suffixOverrides="and(" prefixOverrides=")">and(
+			  		<choose>
+			  			<when test="ctg2 != null">
+			  				<foreach collection="ctg2" item="item" index="index" separator="or">
+								r.ctg2 = #{item}
+							</foreach>
+			  			</when>
+			  			<otherwise> 1 = 1</otherwise>
+			  		</choose>
+			  		)
+		  		</trim>
+		  		<trim suffixOverrides="and(" prefixOverrides=")">and(
+			  		<choose>
+			  			<when test="ctg3 != null">
+			  				<foreach collection="ctg3" item="item" index="index" separator="or">
+								r.ctg3 = #{item}
+							</foreach>
+			  			</when>
+			  			<otherwise> 1 = 1</otherwise>
+			  		</choose>
+			  		)
+		  		</trim>
+			</trim>
+			and r.state = 1
+			<choose>
+	  			<when test="orderBy.equals('rcpDate')">
+	  				ORDER BY r.rcpDate ASC
+	  			</when>
+	  			<when test="orderBy.equals('rcpTitle')">
+	  				ORDER BY r.rcpTitle ASC
+	  			</when>
+	  			<when test="orderBy.equals('foodName')">
+	  				ORDER BY r.foodName ASC
+	  			</when>
+	  		</choose>
+	  		 limit #{startN}, #{noticeCnt}
+		</where>
+  </select>
+  
+	<!-- 레시피 하나 가져오기 -->
+	<select id="detailRecipe" parameterType = "int" resultType = "com.food.recipe.model.RecipeVO">
+		SELECT * FROM recipe r, member m WHERE r.memId=m.memId and r.rcpNo=#{rcpNo}
+	</select>
+	
+	<!-- 요리 순서 가져오기 -->
+	<select id="orderOne" parameterType = "int" resultType = "com.food.recipe.model.IdntOrderVO">
+		SELECT * FROM idntOrder WHERE rcpNo=#{rcpNo}
+	</select>
+	
+	<!-- 댓글 가져오기 -->
+	<select id="listComment" parameterType = "hashmap" resultType = "com.food.recipe.model.RcpCommentVO">
+		SELECT * FROM rcpComment r, member m WHERE r.rcpNo=#{rcpNo} and r.memId=m.memId
+	</select>
+	<!-- 댓글 입력 -->
+	<insert id="commentInsert" parameterType="com.food.recipe.model.RcpCommentVO">
+		insert into rcpComment(memId, rcpNo, top, cmtDcb)
+		values (#{memId}, #{rcpNo}, 0, #{cmtDcb})
+	</insert>
+	<!-- 댓글 삭제 -->
+	<delete id="commentDelete" parameterType="com.food.recipe.model.RcpCommentVO">
+		DELETE FROM rcpComment WHERE cmtNo=#{cmtNo} and memId=#{memId}
+	</delete>
+	<!-- 댓글 수정 -->
+	<update id="commentUpdate"  parameterType="com.food.recipe.model.RcpCommentVO">
+  		UPDATE rcpComment
+  		SET cmtDcb=#{cmtDcb}
+  	    WHERE cmtNo=#{cmtNo}
+	</update>
+	
+	<!-- 번호를 스트링으로 -->
+	<select id="ctgToString" parameterType = "int" resultType = "String">
+		SELECT ctgName FROM ctgTable WHERE ctgNo=#{ctgNo}
+	</select>
+	<update id="viewPlus"  parameterType="int">
+  		UPDATE recipe
+  		SET view=view+1
+  	    WHERE rcpNo=#{rcpNo}
+	</update>
+</mapper>
